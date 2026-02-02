@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import { DataSource } from 'typeorm';
-import { User } from './auth/user.entity';
 
 const dbPort = parseInt(process.env.DB_PORT || '3306', 10);
 
@@ -11,7 +10,8 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || 'sewa_user',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'sewa',
-  entities: [User], // Use direct class references for CLI compatibility
+  // Support running via ts-node (src) and node (dist) by using both extensions.
+  entities: [__dirname + '/**/*.entity.{ts,js}'],
   migrations: [__dirname + '/migrations/*.{ts,js}'],
   synchronize: false, // Use migrations in production
 });
