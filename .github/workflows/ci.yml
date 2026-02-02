@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: change-me-root
+          MYSQL_DATABASE: sewa
+          MYSQL_USER: sewa_user
+          MYSQL_PASSWORD: change-me
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -pchange-me-root"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+
+      - name: Build backend
+        working-directory: backend
+        run: npm run build
+
+      - name: Run migrations (smoke)
+        working-directory: backend
+        env:
+          NODE_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: sewa_user
+          DB_PASSWORD: change-me
+          DB_NAME: sewa
+          JWT_SECRET: ci-temporary-secret
+          JWT_EXPIRES_IN: 1h
+        run: npm run migration:run
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+
+      - name: Install workspace deps
+        run: npm ci
+
+      - name: Build UI package
+        run: npm --workspace packages/ui run build
+
+      - name: Build frontend
+        env:
+          # CRA treats warnings as errors when CI=true.
+          CI: false
+        run: npm --workspace frontend run build
