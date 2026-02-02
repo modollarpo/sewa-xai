@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   username: 'dolapo',
   password: 'Aquila2615',
   database: 'sewa',
-  entities: [__dirname + '/auth/*.entity.{ts,js}'], // Only include entity files
+  entities: [User], // Use direct class references for CLI compatibility
   migrations: [__dirname + '/migrations/*.{ts,js}'],
   synchronize: false, // Use migrations in production
 });
