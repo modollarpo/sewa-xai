@@ -15,8 +15,8 @@ import { AdminController } from './admin.controller';
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'changeme',
-      signOptions: { expiresIn: '1h' },
+      secret: process.env.JWT_SECRET || '',
+      signOptions: { expiresIn: (process.env.JWT_EXPIRES_IN || '1h') as any },
     }),
     TypeOrmModule.forFeature([User]),
   ],

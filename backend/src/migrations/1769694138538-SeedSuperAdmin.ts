@@ -4,12 +4,19 @@ export class SeedSuperAdmin1769694138538 implements MigrationInterface {
     name = 'SeedSuperAdmin1769694138538'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Insert a secure super-admin user (username: superadmin, password: SuperSecure!2026, role: super_admin)
+        // Optional seed: only runs when SUPERADMIN_PASSWORD is provided.
+        const username = process.env.SUPERADMIN_USERNAME || 'superadmin';
+        const email = process.env.SUPERADMIN_EMAIL || 'superadmin@sewa.local';
+        const password = process.env.SUPERADMIN_PASSWORD;
+        if (!password) {
+            return;
+        }
+
         const bcrypt = require('bcryptjs');
-        const passwordHash = await bcrypt.hash('SuperSecure!2026', 10);
+        const passwordHash = await bcrypt.hash(password, 10);
         await queryRunner.query(`
             INSERT INTO \`user\` (id, active, username, email, passwordHash, role)
-            VALUES (UUID(), 1, 'superadmin', 'superadmin@sewa.local', '${passwordHash}', 'super_admin')
+            VALUES (UUID(), 1, '${username}', '${email}', '${passwordHash}', 'super_admin')
         `);
     }
 

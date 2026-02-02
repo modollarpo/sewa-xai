@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Query, Param, Patch } from '@nestjs/common';
 import { ClinicalScanService } from './clinical-scan.service';
-import { ClinicalScan } from '../../../packages/types';
+import { ClinicalScan } from 'types';
 
 @Controller('clinical-scan')
 export class ClinicalScanController {

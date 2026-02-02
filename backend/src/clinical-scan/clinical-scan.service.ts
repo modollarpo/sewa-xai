@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ClinicalScan } from '../../../packages/types';
+import { ClinicalScan } from 'types';
 
 @Injectable()
 export class ClinicalScanService {

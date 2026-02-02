@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { OrganizationService } from './organization.service';
-import { Organization } from '../../../packages/types/clinical';
+import { Organization } from 'types/clinical';
 
 @Controller('organization')
 export class OrganizationController {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './auth/user.entity';
 import { ImageIngestionModule } from './image-ingestion/image-ingestion.module';
 import { AiInferenceModule } from './ai-inference/ai-inference.module';
 import { ClinicianModule } from './clinician/clinician.module';
@@ -16,18 +16,25 @@ import { AuditLogsModule } from './audit-logs/audit-logs.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'dolapo',
-      password: 'Aquila2615',
-      database: 'sewa',
-      entities: [process.cwd() + '/dist/backend/src/**/*.entity.js'],
-      migrations: [process.cwd() + '/dist/backend/src/migrations/*.js'],
-      synchronize: false,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.local'],
     }),
-    // All other modules must come after TypeOrmModule.forRoot
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'mysql',
+        host: config.get<string>('DB_HOST', '127.0.0.1'),
+        port: parseInt(config.get<string>('DB_PORT', '3306'), 10),
+        username: config.get<string>('DB_USER', 'sewa_user'),
+        password: config.get<string>('DB_PASSWORD', ''),
+        database: config.get<string>('DB_NAME', 'sewa'),
+        autoLoadEntities: true,
+        synchronize: false,
+        // Safer behavior in production
+        logging: config.get<string>('NODE_ENV', 'development') !== 'production',
+      }),
+    }),
     ImageIngestionModule,
     AiInferenceModule,
     ClinicianModule,

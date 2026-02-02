@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Organization } from '../../../packages/types/clinical';
+import { Organization } from 'types/clinical';
 
 @Injectable()
 export class OrganizationService {

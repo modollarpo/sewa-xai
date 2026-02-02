@@ -1,9 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './src/app.module';
+// Deprecated entrypoint.
+//
+// The canonical Nest entrypoint is `src/main.ts` and the expected production
+// build output is `dist/main.js`.
+//
+// Use one of:
+// - `npm run start:dev`
+// - `npm run build` then `npm run start:prod`
+//
+// Keeping this file as a hard fail prevents accidental usage.
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  // Enforce global security, logging, and compliance middleware here
-  await app.listen(3000);
-}
-bootstrap();
+// eslint-disable-next-line no-console
+console.error('Deprecated: use backend/src/main.ts via npm scripts (start:dev/start:prod).');
+process.exit(1);

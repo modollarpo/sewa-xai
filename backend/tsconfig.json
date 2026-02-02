@@ -10,16 +10,17 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "../",
-    "baseUrl": "../",
+    "rootDir": "./src",
+    "baseUrl": "./",
     "ignoreDeprecations": "6.0",
     "incremental": true,
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "../packages/types/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
   "paths": {
-    "packages/types": ["../packages/types/index.ts"]
+    "types": ["../packages/types/index.ts"],
+    "types/*": ["../packages/types/*"]
   }
 }
