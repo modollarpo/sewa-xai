@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../",
+    "paths": {
+      "packages/ui": ["packages/ui/index.ts"],
+      "packages/types": ["packages/types/index.ts"]
+    }
+  }
+}

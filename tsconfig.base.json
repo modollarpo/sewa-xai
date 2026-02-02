@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "packages/types": ["packages/types/index.ts"],
+      "packages/ui": ["packages/ui/index.ts"]
+    },
+    "lib": ["dom", "esnext"]
+  },
+  "include": ["backend/src", "frontend/src", "packages/types", "packages/ui"]
+}

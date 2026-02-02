@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "composite": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  },
+  "include": ["*.ts", "*.tsx"]
+}

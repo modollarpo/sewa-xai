@@ -1,0 +1,23 @@
+{
+  "workspaces": [
+    "frontend",
+    "packages/ui"
+  ],
+  "dependencies": {
+    "@nestjs/common": "^11.1.12",
+    "@nestjs/core": "^11.1.12",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.13.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.13.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.44",
+    "@types/react-dom": "^18.2.17",
+    "typescript": "^5.9.3"
+  }
+}
