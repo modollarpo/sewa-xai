@@ -31,6 +31,8 @@ import { AuditLogsModule } from './audit-logs/audit-logs.module';
         database: config.get<string>('DB_NAME', 'sewa'),
         autoLoadEntities: true,
         synchronize: false,
+        retryAttempts: parseInt(config.get<string>('DB_RETRY_ATTEMPTS', '30'), 10),
+        retryDelay: parseInt(config.get<string>('DB_RETRY_DELAY_MS', '2000'), 10),
         // Safer behavior in production
         logging: config.get<string>('NODE_ENV', 'development') !== 'production',
       }),
